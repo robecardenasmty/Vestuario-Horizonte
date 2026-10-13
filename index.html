@@ -637,7 +637,7 @@ $("#generar").addEventListener("click", async ()=>{
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span>Generando';
   $("#resultado").className = "result";
-  $("#resultado").innerHTML = '<span class="spinner"></span>Investigando datos actuales, verificando notas y armando la salida editorial...';
+  $("#resultado").innerHTML = '<span class="spinner"></span>Verificando datos clave y armando la salida editorial...';
 
   try{
     const r = await fetch("/api/generar",{

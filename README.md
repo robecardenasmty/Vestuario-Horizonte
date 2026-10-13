@@ -1,21 +1,13 @@
-# El Horizonte Express — Vestuario Editorial v5
+# El Horizonte Express — Vestuario Editorial v6 FAST
 
-## Corrección principal
-El logo de El Horizonte ahora va **embebido directamente dentro del HTML** en formato base64.
+V6 elimina la doble llamada secuencial de V5.
 
-Esto evita que la splash screen dependa de una ruta relativa como `/assets/elhorizonte_logo.png`,
-por lo que el logo no se rompe aunque Vercel cambie la forma de servir los archivos estáticos.
+Ahora:
+- hace UNA sola llamada a OpenAI;
+- mantiene web_search;
+- busca sólo clima, divisas y hechos sensibles/dudosos;
+- usa search_context_size='low' para reducir latencia.
 
-## Incluye
-- Splash animada
-- Logo real de El Horizonte
-- Tagline: VESTUARIO EDITORIAL
-- Interfaz tipo app
-- Vestuario completo
-- Cintillos de titulares
-- Investigación web obligatoria desde la API de OpenAI
-
-## Vercel
-Configura:
+Variables de entorno:
 - OPENAI_API_KEY
 - opcional: OPENAI_MODEL=gpt-5.6-sol
