@@ -13,7 +13,7 @@ const VOICES = {
   "Bianca Cortés": "17f1dd8260134ab9b0293f2f14a1993a",
   "Mauricio Leal": "e6f80a75818846988ef084c6e7ff78bf",
   "Renata Lozano": "04db0f12a69b49f1a52e3de00336eb08",
-  "Sofía Garza": "a728d2ae7c724bd781740c47bc3a5488"
+  "Sofía Garza": "b6ac3f58d5df46bd947a10c533a3583a"
 };
 
 export default async function handler(req, res) {
