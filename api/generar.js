@@ -92,20 +92,61 @@ Incluye sólo fenómenos importantes: ciclones, frentes, lluvias intensas, calor
 ## MONTERREY / NUEVO LEÓN
 **MÁXIMA:**
 **MÍNIMA:**
-**CONDICIONES / LLUVIA:**
+**PRECIPITACIÓN: XX%**
+**CONDICIONES:**
+
+REGLAS:
+- El porcentaje de precipitación para Monterrey es OBLIGATORIO.
+- Debe corresponder explícitamente a la fecha editorial.
+- Si hay varias fuentes/modelos, usa una referencia confiable y no inventes un promedio.
+- Si el porcentaje cambia por horario, usa el valor más representativo del periodo diurno y acláralo brevemente si hace falta.
 
 ### [CONDUCTORA]
 Texto natural y breve.
+Debe mencionar explícitamente:
+- máxima;
+- mínima;
+- porcentaje de precipitación;
+- condición general del día.
+
+Ejemplo de estructura:
+"Y en Monterrey esperamos una máxima de [X] grados, mínima de [Y], con [Z] por ciento de probabilidad de precipitación y condiciones [descripción]."
+
 Cierra:
 "Para más información, visite elhorizonte.mx. ¡Excelente [día de la semana]!"
 
 # FRASE DEL DÍA — [AUTOR]
-Elige una cita auténtica y verificable relacionada con una de las notas fuertes.
+
+PROCESO OBLIGATORIO PARA ELEGIR LA FRASE:
+1. Identifica cuál es LA NOTA EDITORIALMENTE MÁS IMPORTANTE del noticiero completo.
+   - Prioriza impacto público, relevancia social, política, económica, seguridad, salud o consecuencias para la audiencia.
+   - No elijas automáticamente deportes o entretenimiento si existe una nota de mayor impacto.
+2. Resume mentalmente el TEMA DE FONDO de esa nota en 2 o 3 conceptos.
+   Ejemplos: justicia, responsabilidad, memoria, futuro, poder, ciudad, educación, prevención, verdad, resiliencia.
+3. Busca una cita auténtica y verificable cuya idea central conecte DIRECTAMENTE con ese tema.
+4. La conexión debe sentirse específica para ESTE noticiero, no como frase motivacional genérica.
+5. EVITA repetir citas muy usadas o ya empleadas recientemente.
+6. NO uses por defecto frases de Nelson Mandela, Winston Churchill, Abraham Lincoln, Séneca, Simone Weil, John F. Kennedy, Louis Pasteur, George Santayana o San Agustín, salvo que la conexión sea excepcionalmente precisa.
+7. Si una cita tiene atribución dudosa, descártala y busca otra.
+8. Indica brevemente con qué nota se está relacionando.
+
+Formato:
+
+# FRASE DEL DÍA — [AUTOR]
+
+**NOTA RELACIONADA:** [tema o titular de la nota principal]
+
+**“[CITA]”**
+
+Breve explicación de por qué esa frase conecta con la nota principal.
 
 ### [CONDUCTORA]
 "Antes de concluir, permítanme compartirles esta reflexión de [autor]:"
+
 "[cita]"
-Breve reflexión.
+
+Luego una reflexión breve, sobria y específica sobre la nota relacionada.
+
 "Con esta reflexión llegamos al final de El Horizonte Express."
 `;
 }
