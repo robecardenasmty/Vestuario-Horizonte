@@ -1,16 +1,26 @@
-# El Horizonte Express — Vestuario Editorial v9
+# El Horizonte Express — Vestuario Editorial v11
 
-## Cambios
-- Se eliminó el editor de clima simplificado.
-- Se integró exactamente el archivo compartido por el usuario como tercera pestaña:
-  - `editor-clima-motion.html`
-- La pestaña **Clima gráfico** ahora carga ese editor tal cual dentro de un iframe interno.
-- Se conserva memoria independiente para:
-  - Vestuario
-  - Titulares
-- La API y la lógica editorial permanecen intactas.
+## Nueva cuarta pestaña
+Se agregó:
 
-## Archivos clave
-- `index.html`
-- `editor-clima-motion.html`
-- `api/generar.js`
+**Cintillo redes**
+
+Esta pestaña integra EXACTAMENTE el archivo:
+`Pleca EH - CINTILLO REDES_NUEVA FONT (1).html`
+
+dentro de la micro-app como:
+`generador-pleca-eh.html`
+
+## Se conserva
+- Vestuario del noticiero
+- Cintillos de titulares
+- Generación paralela de Vestuario + Titulares
+- Memoria independiente por pestaña
+- Editor Clima Motion exacto
+- API editorial sin cambios
+
+## Archivos
+- index.html
+- editor-clima-motion.html
+- generador-pleca-eh.html
+- api/generar.js

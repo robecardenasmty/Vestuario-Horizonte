@@ -516,7 +516,76 @@
     @media(max-width:1050px){
       .climate-frame-wrap{min-height:820px;height:calc(84vh - 76px)}
     }
-    </style>
+    
+    .tab[data-busy="true"]::after{
+      content:"";
+      display:inline-block;
+      width:8px;height:8px;
+      margin-left:8px;
+      border-radius:50%;
+      background:var(--lime-dark);
+      box-shadow:0 0 0 4px rgba(193,207,0,.14);
+      vertical-align:1px;
+      animation:tabPulse 1s ease-in-out infinite;
+    }
+    @keyframes tabPulse{
+      0%,100%{opacity:.35}
+      50%{opacity:1}
+    }
+
+
+    /* GENERADOR PLECA / CINTILLO REDES */
+    .pleca-area{display:none}
+    .pleca-embed{
+      background:#fff;
+      border:1px solid #e2e5eb;
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      min-height:78vh;
+      padding:0;
+    }
+    .pleca-embed-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:18px 22px;
+      border-bottom:1px solid #eceff3;
+      background:linear-gradient(180deg,#ffffff 0%, #fafbfc 100%);
+    }
+    .pleca-embed-head h2{
+      margin:0;
+      font-family:"Bebas Neue", sans-serif;
+      font-size:32px;
+      letter-spacing:.05em;
+      font-weight:400;
+    }
+    .pleca-embed-head p{
+      margin:4px 0 0;
+      color:#727a87;
+      font-size:13px;
+    }
+    .pleca-frame-wrap{
+      height:calc(78vh - 76px);
+      min-height:780px;
+      background:#faf9f5;
+    }
+    .pleca-frame{
+      width:100%;
+      height:100%;
+      border:0;
+      display:block;
+      background:#faf9f5;
+    }
+    @media(max-width:1050px){
+      .pleca-frame-wrap{
+        min-height:850px;
+        height:calc(86vh - 76px);
+      }
+    }
+
+</style>
 </head>
 <body>
   <!-- Splash / intro -->
@@ -548,6 +617,7 @@
           <button class="tab active" data-mode="vestuario">Vestuario del noticiero</button>
           <button class="tab" data-mode="titulares">Cintillos de titulares</button>
           <button class="tab" data-mode="clima">Clima gráfico</button>
+          <button class="tab" data-mode="pleca">Cintillo redes</button>
         </div>
 
         <div class="meta">
@@ -612,6 +682,28 @@
           </div>
         </div>
       </section>
+
+      <section class="pleca-area" id="plecaArea">
+        <div class="pleca-embed">
+          <div class="pleca-embed-head">
+            <div>
+              <h2>Cintillo redes</h2>
+              <p>Generador Pleca EH integrado exactamente como el archivo original.</p>
+            </div>
+            <span class="badge">Lower Third</span>
+          </div>
+          <div class="pleca-frame-wrap">
+            <iframe
+              id="plecaFrame"
+              class="pleca-frame"
+              src="./generador-pleca-eh.html"
+              title="Pleca EH · Lower Third"
+              loading="eager"
+              referrerpolicy="no-referrer"
+            ></iframe>
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 
@@ -620,7 +712,7 @@ const $ = (s)=>document.querySelector(s);
 let mode = "vestuario";
 let rawResult = "";
 
-const STORAGE_KEY = "eh_app_state_v9";
+const STORAGE_KEY = "eh_app_state_v10";
 const defaultResultText = "Aquí aparecerá la propuesta lista para copiar y trabajar.";
 
 const defaultTabStates = {
@@ -639,6 +731,13 @@ const defaultTabStates = {
 };
 
 let tabStates = JSON.parse(JSON.stringify(defaultTabStates));
+
+/* Estado de trabajos activos.
+   No se persiste: si recargas, las solicitudes en curso se pierden. */
+const jobs = {
+  vestuario: { busy:false },
+  titulares: { busy:false }
+};
 
 function saveAllState(){
   try{
@@ -711,8 +810,17 @@ function currentStandardMode(){
 }
 
 function saveCurrentStandardState(){
-  if(mode === "clima") return;
+  if(mode === "clima" || mode === "pleca") return;
   const key = currentStandardMode();
+
+  /* Si esa pestaña está generando, no reemplazar el HTML guardado
+     con el spinner temporal al cambiar de pestaña. */
+  if(jobs[key].busy){
+    tabStates[key].input = $("#entrada").value;
+    saveAllState();
+    return;
+  }
+
   tabStates[key] = {
     input: $("#entrada").value,
     rawResult: rawResult || "",
@@ -722,13 +830,39 @@ function saveCurrentStandardState(){
   saveAllState();
 }
 
+function renderGenerateButton(key){
+  const btn = $("#generar");
+  const busy = jobs[key]?.busy;
+
+  btn.disabled = !!busy;
+  btn.innerHTML = busy
+    ? '<span class="spinner"></span>Generando'
+    : 'Generar propuesta';
+
+  const tab = document.querySelector('.tab[data-mode="' + key + '"]');
+  if(tab) tab.dataset.busy = busy ? "true" : "false";
+}
+
 function restoreStandardState(key){
   const state = tabStates[key] || defaultTabStates[key];
   $("#entrada").value = state.input || "";
-  $("#resultado").innerHTML = state.displayHtml || defaultResultText;
-  $("#resultado").className = state.resultClass || "result empty";
   rawResult = state.rawResult || "";
+
+  if(jobs[key].busy){
+    $("#resultado").className = "result";
+    $("#resultado").innerHTML =
+      '<span class="spinner"></span>' +
+      (key === "vestuario"
+        ? 'Generando vestuario del noticiero…'
+        : 'Generando cintillos del resumen…') +
+      '<br><br><span style="color:#7a808d;font-size:13px">Puedes cambiar de pestaña y seguir trabajando.</span>';
+  }else{
+    $("#resultado").innerHTML = state.displayHtml || defaultResultText;
+    $("#resultado").className = state.resultClass || "result empty";
+  }
+
   $("#copiar").disabled = !rawResult;
+  renderGenerateButton(key);
 }
 
 function setTabMode(newMode){
@@ -740,11 +874,21 @@ function setTabMode(newMode){
   if(btn) btn.classList.add("active");
 
   const climate = newMode === "clima";
-  $("#standardArea").style.display = climate ? "none" : "grid";
+  const pleca = newMode === "pleca";
+  const embedded = climate || pleca;
+
+  $("#standardArea").style.display = embedded ? "none" : "grid";
   $("#climateArea").style.display = climate ? "block" : "none";
+  $("#plecaArea").style.display = pleca ? "block" : "none";
 
   if(climate){
     $("#modeBadge").textContent = "Editor de clima motion integrado";
+    saveAllState();
+    return;
+  }
+
+  if(pleca){
+    $("#modeBadge").textContent = "Generador Pleca EH · Lower Third";
     saveAllState();
     return;
   }
@@ -769,8 +913,15 @@ document.querySelectorAll(".tab").forEach(btn=>{
   btn.addEventListener("click",()=>setTabMode(btn.dataset.mode));
 });
 
+$("#entrada").addEventListener("input", ()=>{
+  if(mode === "clima" || mode === "pleca") return;
+  const key = currentStandardMode();
+  tabStates[key].input = $("#entrada").value;
+  saveAllState();
+});
+
 $("#ejemplo").addEventListener("click",()=>{
-  if(mode === "clima") return;
+  if(mode === "clima" || mode === "pleca") return;
   const key = currentStandardMode();
   $("#entrada").value = key === "vestuario"
     ? `[REPORTERO: David Torres] — 1. Ejemplo de nota
@@ -782,12 +933,20 @@ Gracias David, por la información. Continuamos con otro tema.`
 • Nuevo León presenta una nueva obra de movilidad.
 • Autoridades emiten una alerta preventiva por lluvias.
 • El equipo local consiguió una victoria importante.`;
-  saveCurrentStandardState();
+
+  tabStates[key].input = $("#entrada").value;
+  saveAllState();
 });
 
 $("#limpiar").addEventListener("click",()=>{
-  if(mode === "clima") return;
+  if(mode === "clima" || mode === "pleca") return;
   const key = currentStandardMode();
+
+  if(jobs[key].busy){
+    alert("Esta pestaña está generando. Espera a que termine antes de limpiarla.");
+    return;
+  }
+
   $("#entrada").value = "";
   $("#resultado").innerHTML = defaultResultText;
   $("#resultado").className = "result empty";
@@ -806,49 +965,108 @@ $("#copiar").addEventListener("click", async ()=>{
 });
 
 $("#generar").addEventListener("click", async ()=>{
-  if(mode === "clima") return;
+  if(mode === "clima" || mode === "pleca") return;
+
+  /* Capturar el modo AHORA. No volver a consultar `mode`
+     durante la petición, porque el usuario puede cambiar de pestaña. */
+  const requestMode = currentStandardMode();
   const contenido = $("#entrada").value.trim();
+  const fecha = $("#fecha").value;
+
   if(!contenido){
     $("#resultado").className = "result error";
     $("#resultado").textContent = "Pega primero el contenido del noticiero o el resumen.";
-    saveCurrentStandardState();
     return;
   }
 
-  const btn = $("#generar");
-  btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span>Generando';
-  $("#resultado").className = "result";
-  $("#resultado").innerHTML = '<span class="spinner"></span>Verificando datos clave y armando la salida editorial...';
-  saveCurrentStandardState();
+  if(jobs[requestMode].busy) return;
+
+  tabStates[requestMode].input = contenido;
+  jobs[requestMode].busy = true;
+  renderGenerateButton(requestMode);
+
+  /* Sólo mostrar spinner si seguimos viendo esa pestaña. */
+  if(mode === requestMode){
+    $("#resultado").className = "result";
+    $("#resultado").innerHTML =
+      '<span class="spinner"></span>' +
+      (requestMode === "vestuario"
+        ? 'Generando vestuario del noticiero…'
+        : 'Generando cintillos del resumen…') +
+      '<br><br><span style="color:#7a808d;font-size:13px">Puedes cambiar de pestaña y lanzar la otra generación en paralelo.</span>';
+  }
+
+  saveAllState();
 
   try{
     const r = await fetch("/api/generar",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({mode: currentStandardMode(), contenido, fecha:$("#fecha").value})
+      body:JSON.stringify({
+        mode: requestMode,
+        contenido,
+        fecha
+      })
     });
+
     const data = await r.json();
     if(!r.ok) throw new Error(data.error || "No se pudo generar la respuesta.");
-    rawResult = data.text;
-    $("#resultado").className = "result";
-    $("#resultado").innerHTML = renderMarkdown(rawResult);
-    $("#copiar").disabled = false;
-    saveCurrentStandardState();
+
+    const generatedText = data.text;
+    const generatedHtml = renderMarkdown(generatedText);
+
+    /* Guardar SIEMPRE en la pestaña que lanzó la petición,
+       aunque el usuario ya esté viendo otra. */
+    tabStates[requestMode] = {
+      input: contenido,
+      rawResult: generatedText,
+      displayHtml: generatedHtml,
+      resultClass: "result"
+    };
+
+    /* Actualizar pantalla sólo si esa pestaña sigue visible. */
+    if(mode === requestMode){
+      rawResult = generatedText;
+      $("#resultado").className = "result";
+      $("#resultado").innerHTML = generatedHtml;
+      $("#copiar").disabled = false;
+    }
+
   }catch(err){
-    $("#resultado").className = "result error";
-    $("#resultado").textContent = "ERROR\n\n" + err.message;
-    saveCurrentStandardState();
+    const errorText = "ERROR\n\n" + err.message;
+
+    tabStates[requestMode] = {
+      input: contenido,
+      rawResult: "",
+      displayHtml: escapeHtml(errorText).replace(/\n/g,"<br>"),
+      resultClass: "result error"
+    };
+
+    if(mode === requestMode){
+      rawResult = "";
+      $("#resultado").className = "result error";
+      $("#resultado").textContent = errorText;
+      $("#copiar").disabled = true;
+    }
+
   }finally{
-    btn.disabled = false;
-    btn.textContent = "Generar propuesta";
+    jobs[requestMode].busy = false;
+
+    const tab = document.querySelector('.tab[data-mode="' + requestMode + '"]');
+    if(tab) tab.dataset.busy = "false";
+
+    if(mode === requestMode){
+      restoreStandardState(requestMode);
+    }
+
+    saveAllState();
   }
 });
 
 $("#fecha").addEventListener("change", saveAllState);
 setTabMode(mode || "vestuario");
 
-// optional: allow skipping splash quickly with click
+/* Permite saltar splash con click */
 document.getElementById("splash").addEventListener("click", ()=>{
   const splash = document.getElementById("splash");
   splash.style.animation = "none";
