@@ -585,6 +585,146 @@
       }
     }
 
+
+    /* VOCES · FISH AUDIO */
+    .voice-area{display:none}
+    .voice-shell{
+      display:grid;
+      grid-template-columns:minmax(320px, 430px) minmax(0, 1fr);
+      gap:18px;
+      align-items:start;
+    }
+    .voice-card{
+      background:#fff;
+      border:1px solid #e2e5eb;
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .voice-card .inner{padding:22px}
+    .voice-field{display:grid;gap:8px;margin-bottom:16px}
+    .voice-field label{
+      font-size:12px;
+      font-weight:800;
+      color:#656c78;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+    }
+    .voice-field select,
+    .voice-field textarea{
+      width:100%;
+      border:1px solid #d9dde5;
+      border-radius:14px;
+      background:#fbfbfd;
+      color:#121316;
+      font:600 14px Inter, sans-serif;
+      outline:none;
+    }
+    .voice-field select{
+      height:46px;
+      padding:0 12px;
+    }
+    .voice-field textarea{
+      min-height:310px;
+      padding:14px;
+      resize:vertical;
+      line-height:1.55;
+    }
+    .voice-field select:focus,
+    .voice-field textarea:focus{
+      border-color:var(--lime-dark);
+      box-shadow:0 0 0 4px rgba(193,207,0,.12);
+      background:#fff;
+    }
+    .voice-toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+    .voice-status{
+      margin-top:14px;
+      min-height:22px;
+      font-size:13px;
+      color:#707785;
+    }
+    .voice-status.error{color:#b3261e}
+    .voice-output{
+      display:grid;
+      gap:18px;
+    }
+    .voice-now{
+      min-height:160px;
+      border-radius:22px;
+      background:
+        radial-gradient(circle at 90% 0%, rgba(213,231,0,.16), transparent 34%),
+        #111416;
+      color:#fff;
+      padding:24px;
+      position:relative;
+      overflow:hidden;
+    }
+    .voice-now::after{
+      content:"";
+      position:absolute;
+      width:180px;height:180px;
+      border:1px solid rgba(213,231,0,.25);
+      border-radius:50%;
+      right:-50px;top:-60px;
+    }
+    .voice-now .eyebrow{
+      color:var(--lime);
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      font-size:11px;
+      font-weight:900;
+      margin-bottom:9px;
+    }
+    .voice-now h3{
+      font-family:"Bebas Neue", sans-serif;
+      font-weight:400;
+      letter-spacing:.04em;
+      font-size:42px;
+      margin:0 0 8px;
+    }
+    .voice-now p{
+      margin:0;
+      color:#b9c0c6;
+      font-size:13px;
+      max-width:620px;
+      line-height:1.5;
+    }
+    .audio-panel{
+      padding:22px;
+      border:1px solid #e3e6eb;
+      border-radius:22px;
+      background:#fff;
+    }
+    .audio-panel audio{
+      width:100%;
+      margin:8px 0 14px;
+    }
+    .audio-placeholder{
+      color:#7b828d;
+      border:1px dashed #cfd4dc;
+      border-radius:18px;
+      padding:28px;
+      text-align:center;
+      background:#fafbfc;
+    }
+    .voice-meta{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      font-size:12px;
+      color:#7b828d;
+      margin-top:10px;
+    }
+    @media(max-width:1000px){
+      .voice-shell{grid-template-columns:1fr}
+    }
+
 </style>
 </head>
 <body>
@@ -618,6 +758,7 @@
           <button class="tab" data-mode="titulares">Cintillos de titulares</button>
           <button class="tab" data-mode="clima">Clima gráfico</button>
           <button class="tab" data-mode="pleca">Cintillo redes</button>
+          <button class="tab" data-mode="voces">Voces</button>
         </div>
 
         <div class="meta">
@@ -704,6 +845,73 @@
           </div>
         </div>
       </section>
+
+      <section class="voice-area" id="voiceArea">
+        <div class="voice-shell">
+          <section class="voice-card">
+            <div class="cardhead">
+              <h2>Generador de voces</h2>
+              <span class="badge">Fish Audio</span>
+            </div>
+            <div class="inner">
+              <div class="voice-field">
+                <label for="voiceSelect">Voz</label>
+                <select id="voiceSelect">
+                  <option value="Sofía Garza">Sofía Garza</option>
+                  <option value="David Torres">David Torres</option>
+                  <option value="Ivet Serrano">Ivet Serrano</option>
+                  <option value="José Luis Marroquín">José Luis Marroquín</option>
+                  <option value="Vanesa Aguilar">Vanesa Aguilar</option>
+                  <option value="Diego Olivos">Diego Olivos</option>
+                  <option value="Paulina Cantú">Paulina Cantú</option>
+                  <option value="Javier Castañeda">Javier Castañeda</option>
+                  <option value="Bianca Cortés">Bianca Cortés</option>
+                  <option value="Mauricio Leal">Mauricio Leal</option>
+                  <option value="Renata Lozano">Renata Lozano</option>
+                </select>
+              </div>
+
+              <div class="voice-field">
+                <label for="voiceText">Texto a locutar</label>
+                <textarea id="voiceText" placeholder="Pega aquí el texto que quieres regenerar con la voz seleccionada..."></textarea>
+              </div>
+
+              <div class="voice-toolbar">
+                <button class="primary" id="generateVoice">Generar MP3</button>
+                <button class="ghost" id="clearVoice">Limpiar</button>
+              </div>
+
+              <div class="voice-status" id="voiceStatus">Listo para generar.</div>
+            </div>
+          </section>
+
+          <section class="voice-output">
+            <div class="voice-now">
+              <div class="eyebrow">Voz seleccionada</div>
+              <h3 id="voiceNamePreview">Sofía Garza</h3>
+              <p>Generación directa con Fish Audio desde la micro‑app. La clave de API permanece protegida en Vercel.</p>
+            </div>
+
+            <div class="audio-panel">
+              <div class="audio-placeholder" id="audioPlaceholder">
+                El audio generado aparecerá aquí.
+              </div>
+
+              <div id="audioResult" style="display:none">
+                <strong id="audioTitle">Audio generado</strong>
+                <audio id="voicePlayer" controls preload="metadata"></audio>
+                <div class="voice-toolbar">
+                  <button class="secondary" id="downloadVoice">Descargar MP3</button>
+                </div>
+                <div class="voice-meta">
+                  <span id="audioVoiceMeta">—</span>
+                  <span>MP3</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
     </div>
   </div>
 
@@ -712,7 +920,7 @@ const $ = (s)=>document.querySelector(s);
 let mode = "vestuario";
 let rawResult = "";
 
-const STORAGE_KEY = "eh_app_state_v10";
+const STORAGE_KEY = "eh_app_state_v12";
 const defaultResultText = "Aquí aparecerá la propuesta lista para copiar y trabajar.";
 
 const defaultTabStates = {
@@ -810,7 +1018,7 @@ function currentStandardMode(){
 }
 
 function saveCurrentStandardState(){
-  if(mode === "clima" || mode === "pleca") return;
+  if(mode === "clima" || mode === "pleca" || mode === "voces") return;
   const key = currentStandardMode();
 
   /* Si esa pestaña está generando, no reemplazar el HTML guardado
@@ -875,11 +1083,13 @@ function setTabMode(newMode){
 
   const climate = newMode === "clima";
   const pleca = newMode === "pleca";
-  const embedded = climate || pleca;
+  const voices = newMode === "voces";
+  const special = climate || pleca || voices;
 
-  $("#standardArea").style.display = embedded ? "none" : "grid";
+  $("#standardArea").style.display = special ? "none" : "grid";
   $("#climateArea").style.display = climate ? "block" : "none";
   $("#plecaArea").style.display = pleca ? "block" : "none";
+  $("#voiceArea").style.display = voices ? "block" : "none";
 
   if(climate){
     $("#modeBadge").textContent = "Editor de clima motion integrado";
@@ -889,6 +1099,12 @@ function setTabMode(newMode){
 
   if(pleca){
     $("#modeBadge").textContent = "Generador Pleca EH · Lower Third";
+    saveAllState();
+    return;
+  }
+
+  if(voices){
+    $("#modeBadge").textContent = "Fish Audio · Generación directa de voces";
     saveAllState();
     return;
   }
@@ -914,14 +1130,14 @@ document.querySelectorAll(".tab").forEach(btn=>{
 });
 
 $("#entrada").addEventListener("input", ()=>{
-  if(mode === "clima" || mode === "pleca") return;
+  if(mode === "clima" || mode === "pleca" || mode === "voces") return;
   const key = currentStandardMode();
   tabStates[key].input = $("#entrada").value;
   saveAllState();
 });
 
 $("#ejemplo").addEventListener("click",()=>{
-  if(mode === "clima" || mode === "pleca") return;
+  if(mode === "clima" || mode === "pleca" || mode === "voces") return;
   const key = currentStandardMode();
   $("#entrada").value = key === "vestuario"
     ? `[REPORTERO: David Torres] — 1. Ejemplo de nota
@@ -939,7 +1155,7 @@ Gracias David, por la información. Continuamos con otro tema.`
 });
 
 $("#limpiar").addEventListener("click",()=>{
-  if(mode === "clima" || mode === "pleca") return;
+  if(mode === "clima" || mode === "pleca" || mode === "voces") return;
   const key = currentStandardMode();
 
   if(jobs[key].busy){
@@ -965,7 +1181,7 @@ $("#copiar").addEventListener("click", async ()=>{
 });
 
 $("#generar").addEventListener("click", async ()=>{
-  if(mode === "clima" || mode === "pleca") return;
+  if(mode === "clima" || mode === "pleca" || mode === "voces") return;
 
   /* Capturar el modo AHORA. No volver a consultar `mode`
      durante la petición, porque el usuario puede cambiar de pestaña. */
@@ -1062,6 +1278,130 @@ $("#generar").addEventListener("click", async ()=>{
     saveAllState();
   }
 });
+
+
+// ===== VOCES · FISH AUDIO =====
+const VOICE_STORAGE_KEY = "eh_voice_state_v12";
+let currentVoiceBlobUrl = "";
+let currentVoiceBlob = null;
+
+function loadVoiceState(){
+  try{
+    const state = JSON.parse(localStorage.getItem(VOICE_STORAGE_KEY) || "{}");
+    if(state.voice && $("#voiceSelect")){
+      $("#voiceSelect").value = state.voice;
+    }
+    if(typeof state.text === "string" && $("#voiceText")){
+      $("#voiceText").value = state.text;
+    }
+  }catch(e){}
+}
+
+function saveVoiceState(){
+  try{
+    localStorage.setItem(VOICE_STORAGE_KEY, JSON.stringify({
+      voice: $("#voiceSelect").value,
+      text: $("#voiceText").value
+    }));
+  }catch(e){}
+}
+
+function setVoiceStatus(text, isError=false){
+  const el = $("#voiceStatus");
+  el.textContent = text;
+  el.className = "voice-status" + (isError ? " error" : "");
+}
+
+function updateVoicePreview(){
+  $("#voiceNamePreview").textContent = $("#voiceSelect").value;
+  saveVoiceState();
+}
+
+$("#voiceSelect").addEventListener("change", updateVoicePreview);
+$("#voiceText").addEventListener("input", saveVoiceState);
+
+$("#clearVoice").addEventListener("click", ()=>{
+  $("#voiceText").value = "";
+  saveVoiceState();
+  setVoiceStatus("Listo para generar.");
+});
+
+$("#generateVoice").addEventListener("click", async ()=>{
+  const voice = $("#voiceSelect").value;
+  const text = $("#voiceText").value.trim();
+
+  if(!text){
+    setVoiceStatus("Escribe o pega un texto antes de generar.", true);
+    return;
+  }
+
+  const btn = $("#generateVoice");
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Generando voz';
+  setVoiceStatus("Generando audio con Fish Audio…");
+
+  try{
+    const response = await fetch("/api/voz", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ voice, text })
+    });
+
+    if(!response.ok){
+      let message = "No se pudo generar el audio.";
+      try{
+        const data = await response.json();
+        message = data.error || message;
+        if(data.detail) message += " " + data.detail;
+      }catch(e){}
+      throw new Error(message);
+    }
+
+    const blob = await response.blob();
+
+    if(currentVoiceBlobUrl){
+      URL.revokeObjectURL(currentVoiceBlobUrl);
+    }
+
+    currentVoiceBlob = blob;
+    currentVoiceBlobUrl = URL.createObjectURL(blob);
+
+    $("#voicePlayer").src = currentVoiceBlobUrl;
+    $("#audioTitle").textContent = "Audio generado";
+    $("#audioVoiceMeta").textContent = voice;
+    $("#audioPlaceholder").style.display = "none";
+    $("#audioResult").style.display = "block";
+
+    setVoiceStatus("Audio listo.");
+    saveVoiceState();
+
+  }catch(err){
+    setVoiceStatus(err.message, true);
+  }finally{
+    btn.disabled = false;
+    btn.textContent = "Generar MP3";
+  }
+});
+
+$("#downloadVoice").addEventListener("click", ()=>{
+  if(!currentVoiceBlob || !currentVoiceBlobUrl) return;
+
+  const voice = $("#voiceSelect").value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-zA-Z0-9_-]+/g, "_");
+
+  const a = document.createElement("a");
+  a.href = currentVoiceBlobUrl;
+  a.download = (voice || "voz") + ".mp3";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+});
+
+loadVoiceState();
+updateVoicePreview();
+
 
 $("#fecha").addEventListener("change", saveAllState);
 setTabMode(mode || "vestuario");

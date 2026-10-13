@@ -1,26 +1,42 @@
-# El Horizonte Express — Vestuario Editorial v11
+# El Horizonte Express — Vestuario Editorial v12 · Voces Fish Audio
 
-## Nueva cuarta pestaña
-Se agregó:
+## Nueva pestaña: Voces
 
-**Cintillo redes**
+Permite generar MP3 directamente desde Fish Audio sin entrar a fish.audio.
 
-Esta pestaña integra EXACTAMENTE el archivo:
-`Pleca EH - CINTILLO REDES_NUEVA FONT (1).html`
+### Voces configuradas
+- Sofía Garza
+- David Torres
+- Ivet Serrano
+- José Luis Marroquín
+- Vanesa Aguilar
+- Diego Olivos
+- Paulina Cantú
+- Javier Castañeda
+- Bianca Cortés
+- Mauricio Leal
+- Renata Lozano
 
-dentro de la micro-app como:
-`generador-pleca-eh.html`
+## Environment Variables en Vercel
+
+OBLIGATORIA:
+- `FISH_AUDIO_API_KEY`
+
+OPCIONAL:
+- `FISH_AUDIO_MODEL`
+
+Si no configuras `FISH_AUDIO_MODEL`, la app usa:
+- `s2.1-pro-free`
+
+## Endpoint nuevo
+- `POST /api/voz`
+
+La API key nunca se envía al navegador.
 
 ## Se conserva
-- Vestuario del noticiero
-- Cintillos de titulares
-- Generación paralela de Vestuario + Titulares
-- Memoria independiente por pestaña
-- Editor Clima Motion exacto
-- API editorial sin cambios
-
-## Archivos
-- index.html
-- editor-clima-motion.html
-- generador-pleca-eh.html
-- api/generar.js
+- Vestuario
+- Titulares
+- generación paralela Vestuario + Titulares
+- Clima gráfico exacto
+- Cintillo redes exacto
+- memoria por pestaña
