@@ -1,22 +1,16 @@
-# El Horizonte Express — Vestuario Editorial v8
+# El Horizonte Express — Vestuario Editorial v9
 
-## Cambios principales
-- Se agregó una tercera pestaña: **Clima gráfico**.
-- Se agregó memoria por pestaña:
-  - Vestuario conserva su texto y resultado.
-  - Titulares conserva su texto y resultado.
-  - Clima gráfico conserva sus campos.
-- Se usa `localStorage`, así que incluso al refrescar la página se conserva el trabajo local.
-- El editor de clima permite:
-  - ciudad
-  - máxima
-  - mínima
-  - precipitación
-  - condición
-  - subtítulo
-  - exportación a PNG
-  - tomar datos del vestuario ya generado
+## Cambios
+- Se eliminó el editor de clima simplificado.
+- Se integró exactamente el archivo compartido por el usuario como tercera pestaña:
+  - `editor-clima-motion.html`
+- La pestaña **Clima gráfico** ahora carga ese editor tal cual dentro de un iframe interno.
+- Se conserva memoria independiente para:
+  - Vestuario
+  - Titulares
+- La API y la lógica editorial permanecen intactas.
 
-## Variables
-- OPENAI_API_KEY
-- opcional: OPENAI_MODEL
+## Archivos clave
+- `index.html`
+- `editor-clima-motion.html`
+- `api/generar.js`
