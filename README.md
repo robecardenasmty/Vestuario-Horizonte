@@ -1,13 +1,12 @@
-# El Horizonte Express — Vestuario Editorial v6 FAST
+# El Horizonte Express — Vestuario Editorial v7
 
-V6 elimina la doble llamada secuencial de V5.
+Cambios:
+- Frase del día ligada obligatoriamente a LA NOTA MÁS IMPORTANTE del noticiero.
+- Prohibición de recurrir por defecto a citas repetidas/genéricas.
+- Se pide buscar una cita auténtica y verificable relacionada con el tema de fondo de la nota principal.
+- Monterrey ahora incluye siempre porcentaje de precipitación.
+- El guion de clima debe mencionar máxima, mínima y porcentaje de precipitación.
 
-Ahora:
-- hace UNA sola llamada a OpenAI;
-- mantiene web_search;
-- busca sólo clima, divisas y hechos sensibles/dudosos;
-- usa search_context_size='low' para reducir latencia.
-
-Variables de entorno:
+Variables:
 - OPENAI_API_KEY
-- opcional: OPENAI_MODEL=gpt-5.6-sol
+- opcional: OPENAI_MODEL
