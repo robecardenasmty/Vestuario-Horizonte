@@ -16,6 +16,19 @@ Permite generar MP3 directamente desde Fish Audio sin entrar a fish.audio.
 - Bianca Cortés
 - Mauricio Leal
 - Renata Lozano
+- Jared Villarreal
+- Danea Lázaro
+- Humberto Salazar
+- Gladyz Zavaleta
+- Mario Castillo
+- Tania Montemayor
+- Carlos Enríquez
+- David Cázares
+- Julieta Guervara
+- Esmeralda Valdez
+- Olivia Martínez
+- Paola Treviño
+- Laura Palacios
 
 ## Environment Variables en Vercel
 
