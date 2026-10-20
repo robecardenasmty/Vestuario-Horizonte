@@ -13,7 +13,20 @@ const VOICES = {
   "Bianca Cortés": "17f1dd8260134ab9b0293f2f14a1993a",
   "Mauricio Leal": "e6f80a75818846988ef084c6e7ff78bf",
   "Renata Lozano": "04db0f12a69b49f1a52e3de00336eb08",
-  "Sofía Garza": "b6ac3f58d5df46bd947a10c533a3583a"
+  "Sofía Garza": "b6ac3f58d5df46bd947a10c533a3583a",
+  "Jared Villarreal": "27a9c5c37b2a4a0894dd1676593dcbbc",
+  "Danea Lázaro": "ca1c6a4fa80149888c7b5008a89cd8fa",
+  "Humberto Salazar": "fc54ea3d7cfd4b999597e59d8b5135ea",
+  "Gladyz Zavaleta": "29b841274101418fbc0f1ad5d78a3b36",
+  "Mario Castillo": "cbac43a5159f44849dcbecba0db678e8",
+  "Tania Montemayor": "7ac64dddcf744654acd7dd30931b70a2",
+  "Carlos Enríquez": "dab2f64f44104020bec1c99bbfab36a9",
+  "David Cázares": "1a7733493c964aac84968984f536c4cd",
+  "Julieta Guervara": "33bdabd4b1984c019076b36701ebc2a3",
+  "Esmeralda Valdez": "8dd36fb5bbfa433495dc5a7b4eb702f4",
+  "Olivia Martínez": "d8512b430cbb4daaa070b4310be19d13",
+  "Paola Treviño": "2c8827a7b1214f0eb3420eacfcb5d5db",
+  "Laura Palacios": "dc4d471edda84939b2d503caf4d8129a"
 };
 
 export default async function handler(req, res) {
